@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/5/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Ecobajatours Email's</title>
+</head>
+
+<body class="bg">
+
+    <h1 id="title">Envío Masivo de E-Mails</h1>
+    <div class="div-enter-data">
+        <div class="div-enter-data" style="background-color: #d6dbdf; width: 553px; padding: 20px; border-radius: 10px;">
+            <form id="dataForm">
+                <input class="input-enter clear-input" type="email" oninput="verificarCorreo()" id="email"
+                    placeholder="Ingrese su correo electrónico" />
+                <input class="input-enter clear-input" type="password" id="pass" name="password" minlength="8" required
+                    autocomplete="on" placeholder="Ingrese su contraseña" />
+                <div style="display: flex;  justify-content: flex-end; padding-top: 10px;">
+                    <input type="checkbox" id="showPass">
+                    <label for="showPass">Mostrar contraseña</label>
+                </div>
+            </form>
+            <div>
+                <label for="">Empresa: </label>
+                <select class="option" id="company">
+                    <option class="emty">Selecciona una empresa</option>
+                    <option class="juanita">ctBAJA_PACK_SA_LAPQ</option>
+                    <option class="juanita">ctBAJA_PACK_SA_CULQ</option>
+                    <option class="juanita">ctECO_BAJA_TOURS_NM</option>
+                    <option class="iliana">ctECO_BAJA_TOURS_2020Q</option>
+                    <option class="iliana">ctTRANSPORTE_ULPZS</option>
+                    <option class="claudia emty">ctTRANPORTE_URBA_2022</option>
+                    <option class="emty">prueba</option>
+                </select>
+            </div>
+            <div>
+                <label for="">Periodo: </label>
+                <input type="number" id="period" name="period" min="1" max="53" value="0" />
+            </div>
+            <div>
+                <label for="">Año: </label>
+                <input type="number" id="year" name="year" min="1900" max="2100" value="2024" />
+            </div>
+        </div>
+
+        <div
+            style="display: flex; width: 553px; align-items: center; justify-content: center; background-color: #d6dbdf; padding: 20px; border-radius: 10px;">
+            <label for="">Número del empleado: </label>
+            <input class="clear-input" style="width: 7rem;" type="number" id="num_employee" name="num_employee" min="0" max="9999">
+            <button style="margin-top: 5px;" class="btn btn-outline-primary" id="submitButtonSelect">Enviar a</button>
+        </div>
+
+        <div class="container-reg">
+            <div class="container-register">
+                <input type="text" class="btn-register clear-input" name="num_employee_to_register" id="num_employee_to_register"
+                    placeholder="Número del empleado">
+                <input type="text" class="btn-register clear-input" name="name_employee" id="name_employee" placeholder="Nombre del empleado">
+                <input type="text" class="btn-register clear-input" name="email_employee" id="email_employee" placeholder="Email del empleado">
+                <!-- <input type="text" class="btn-register" name="company_employee" id="company_employee" placeholder="Empresa del empleado"> -->
+            </div>
+            <div id="container-buttton">
+                <button class="btn btn-outline-primary" id="submitButton_register">Registrar</button>
+            </div> 
+        </div>
+    </div>
+    <div class="div-button">
+        <button class="btn btn-outline-warning" onclick="clearInput()">Limpiar</button>
+        <button class="btn btn-outline-success" id="submitButton">Enviar</button>
+    </div>
+    <script src="/static/main.js"></script>
+
+    <script>
+        // Obtener el año actual
+        const currentYear = new Date().getFullYear();
+
+        // Establecer el límite superior en el campo de entrada
+        document.getElementById('year').max = currentYear;
+
+        const checkbox = document.getElementById('showPass');
+        const passwordInput = document.getElementById('pass');
+
+
+        checkbox.addEventListener('change', function () {
+            if (checkbox.checked) {
+                passwordInput.type = 'text'; // Muestra la contraseña
+            } else {
+                passwordInput.type = 'password'; // Oculta la contraseña
+            }
+        });
+
+    </script>
+</body>
+
+</html>

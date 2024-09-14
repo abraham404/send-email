@@ -1,0 +1,108 @@
+html,
+body {
+
+    font-family: Helvetica, Arial, sans-serif;
+
+}
+
+#title {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.div-enter-data {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+    /* Una columna */
+    place-items: center;
+}
+
+.div-button {
+    display: grid;
+    grid-template-columns: .1fr 0.1fr;
+    justify-content: center;
+}
+
+.btn {
+    margin: 10px;
+    margin-top: 20px;
+    padding: 10px;
+
+}
+
+.input-enter {
+    width: 15rem;
+    padding: 10px;
+}
+
+
+/*-----*/
+  /* Estilos para la barra de navegación */
+  nav {
+    background-color: #333; /* Color de fondo oscuro */
+    padding: 10px; /* Espacio alrededor de los enlaces */
+     
+}
+
+nav ul {
+    list-style-type: none; /* Eliminar viñetas de la lista */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Alinear los enlaces en fila */
+    justify-content: flex-end;
+}
+
+nav ul li {
+    margin-right: 20px; /* Espacio entre los elementos de la lista */
+}
+
+nav ul li a {
+    color: white; /* Color del texto */
+    text-decoration: none; /* Quitar subrayado de los enlaces */
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* Subrayar al pasar el mouse */
+}
+
+.container-register {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual tamaño */
+    grid-template-rows: repeat(2, auto); /* Tres filas automáticas */
+    gap: 15px;
+    
+}
+
+.container-reg{
+    display: flex;
+    background-color: #d6dbdf; 
+    padding: 18px;
+    border-radius: 10px
+}
+
+#submitButton-register {
+    margin-top: 23px;
+    
+}
+
+#container-buttton{
+    align-items: center; /* Centra verticalmente */
+}
+
+.btn-register{
+    padding: 5px;
+}
+
+.juanita{
+    background-color: #c9f6d6;
+}
+
+.iliana{
+    background-color: #f6c9e9;
+}
+
+.emty{
+    background-color: white;
+}
