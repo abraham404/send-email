@@ -3,6 +3,7 @@ from flask_cors import CORS
 import sqlite3
 import os
 from pathlib import Path
+
 import re
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -59,7 +60,17 @@ def sendData():
 
     # Especificar el directorio
     #directorio = Path('C:/Users/Abraham-TI/Desktop/mail')
-    directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
+    #directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
+    if company == 'ctECO_BAJA_TOURS_2020Q':
+        #directorio = Path('\\\\192.168.101.130\\CFDI de nominas')
+        directorio = Path(r'\\192.168.101.130\CFDI de nominas')
+    elif company == 'ctTRANSPORTE_ULPZS':
+        directorio = Path(r'\\192.168.101.130\CFDI de nominas2')
+    
+        #directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
+    elif company == 'prueba':
+        directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
+
 
     i = 1
     regex = r'(?:[^_]*_){5}([^_]+)'
@@ -102,7 +113,17 @@ def sendData():
                                         to_emails = [email_destina[0]]
                                         from_email = email
                                         from_password = password
-                                        files = ["C:/Users/Abraham-TI/Desktop/mail/"+name_ruta+".pdf", "C:/Users/Abraham-TI/Desktop/mail/"+name_ruta+".xml"]  # Lista de archivos a adjuntar
+                                        #files = ["C:/Users/Abraham-TI/Desktop/mail/"+name_ruta+".pdf", "C:/Users/Abraham-TI/Desktop/mail/"+name_ruta+".xml"]  # Lista de archivos a adjuntar
+                                        #Crear rutas de archivos dinámicamente
+                                        files = [
+                                            directorio / f"{name_ruta}.pdf",
+                                            directorio / f"{name_ruta}.xml"
+                                        ]
+
+                                        # Convertir a cadenas de texto para la función de envío de correo
+                                        files = [str(file) for file in files]
+
+                                        #files = [directorio2+"/"+name_ruta+".pdf", directorio2+"/"+name_ruta+".xml"]  # Lista de archivos a adjuntar
                                     send_email(subject, body, to_emails, from_email, from_password, files)
                                      
                                     print('--- Fin del archivo ---\n')

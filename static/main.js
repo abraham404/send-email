@@ -77,8 +77,13 @@ submitButtonRegister.addEventListener('click', async (event) => {
     const company_emplo = companyEmploInput.value;
 
     console.log(validateEmail(email_emplo))
-    if (validateEmail(email_emplo) === 0) {
-        alert('Por favor, introduce una dirección de correo válida.');
+    if (validateEmail(email_emplo) === 0 || company_emplo === "Selecciona una empresa") {
+        if (validateEmail(email_emplo) === 0) {
+            alert('Por favor, introduce una dirección de correo válida.');
+        } else if (company_emplo === "Selecciona una empresa") {
+            alert("Por favor seleccione una empresa")
+        }
+
     } else {
 
         //console.log(`${num_employee} ${name_employee} ${email_employee} ${company_employee}`);
@@ -137,10 +142,10 @@ submitButtonGet.addEventListener('click', async (event) => {
             }
         });
 
-        
+
         const result = await response.json(); // Procesamos la respuesta como JSON
-        
-        
+
+
         if (result.status === 'success' && result.employee) {
             const { num_employee, name, email } = result.employee;
             numberEmploInput.value = num_employee;
@@ -148,7 +153,7 @@ submitButtonGet.addEventListener('click', async (event) => {
             emailEmploInput.value = email;
 
         } else {
-            
+
             alert('No se encontro el empleado')
         }
 
