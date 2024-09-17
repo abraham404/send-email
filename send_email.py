@@ -95,12 +95,12 @@ def sendData():
                         period_year = re.search(regex2, name_ruta)
                     
                         year_link = period_year.group(1)
-                        period_linl = period_year.group(2)
+                        period_link = period_year.group(2)
 
-                        if year_link == year and period_linl == period:
+                        if year_link == year and period_link == period:
                             num_employee = re.search(regex, name_ruta)
                             code_employee = num_employee.group(1)
-                            print(company)
+                        
                             cursor.execute(f"SELECT email, nombre FROM {company} WHERE num_empleado = ?", (code_employee,))
                             emails_destina=cursor.fetchall()
                             for email_destina in emails_destina:
@@ -113,7 +113,7 @@ def sendData():
                                         to_emails = [email_destina[0]]
                                         from_email = email
                                         from_password = password
-                                        #files = ["C:/Users/Abraham-TI/Desktop/mail/"+name_ruta+".pdf", "C:/Users/Abraham-TI/Desktop/mail/"+name_ruta+".xml"]  # Lista de archivos a adjuntar
+                                    
                                         #Crear rutas de archivos dinámicamente
                                         files = [
                                             directorio / f"{name_ruta}.pdf",
