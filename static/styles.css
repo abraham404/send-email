@@ -106,3 +106,8 @@ nav ul li a:hover {
 .emty{
     background-color: white;
 }
+
+#submitButton_register{
+    width: 102px;
+    height: 44px;
+}

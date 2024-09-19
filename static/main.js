@@ -8,6 +8,7 @@ const combobox = document.getElementById('company');
 const numberEmploInput = document.getElementById('num_employee_to_register');
 const nameEmploInput = document.getElementById('name_employee');
 const emailEmploInput = document.getElementById('email_employee');
+let btnClicked = false;
 
 // Añadimos un event listener al botón para capturar el evento de clic
 submitButton.addEventListener('click', async (event) => {
@@ -64,8 +65,12 @@ submitButton.addEventListener('click', async (event) => {
 });
 
 
+//Registrar un nuevo usuario en la db
 submitButtonRegister.addEventListener('click', async (event) => {
     event.preventDefault(); // Prevenimos cualquier acción por defecto
+
+
+
 
     // Obtén los elementos del DOM
     const companyEmploInput = document.getElementById('company');
@@ -86,7 +91,6 @@ submitButtonRegister.addEventListener('click', async (event) => {
 
     } else {
 
-        //console.log(`${num_employee} ${name_employee} ${email_employee} ${company_employee}`);
 
         const data_employee = {
             number_emplo,
@@ -95,30 +99,69 @@ submitButtonRegister.addEventListener('click', async (event) => {
             company_emplo
         };
 
+        if (!btnClicked) {
 
-        try {
-            // Usamos fetch con async/await para enviar los datos al backend
-            const response = await fetch('/api/employee', {
-                method: 'POST', // Usamos el método POST
-                headers: {
-                    'Content-Type': 'application/json' // Indicamos que los datos son JSON
-                },
-                body: JSON.stringify(data_employee) // Convertimos el objeto a JSON
-            });
+            try {
+                // Usamos fetch con async/await para enviar los datos al backend
+                const response = await fetch('/api/employee', {
+                    method: 'POST', // Usamos el método POST
+                    headers: {
+                        'Content-Type': 'application/json' // Indicamos que los datos son JSON
+                    },
+                    body: JSON.stringify(data_employee) // Convertimos el objeto a JSON
+                });
 
-            console.log(response);  //
-            const result = await response.json();
-            console.log('Success:', result);
-            //submitButton.disabled = false;
-            // Resetea los campos del formulario
+                console.log(response);  //
+                const result = await response.json();
+
+                console.log('Success:', result);
+                //submitButton.disabled = false;
+                // Resetea los campos del formulario
+                numberEmploInput.value = "";
+                nameEmploInput.value = "";
+                emailEmploInput.value = "";
+                //companyEmploInput.value = "";
+
+                alert(result.msg)
+
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }else {
+
+            try{
+                console.log("Hola soy Jorge");
+
+                 // Usamos fetch con async/await para enviar los datos al backend
+                 const response = await fetch(`/api/employee/${number_emplo}/${company_emplo}`, {
+                    method: 'PUT', // Usamos el método POST
+                    headers: {
+                        'Content-Type': 'application/json' // Indicamos que los datos son JSON
+                    },
+                    body: JSON.stringify(data_employee) // Convertimos el objeto a JSON
+                });
+
+                console.log(response);  //
+                const result = await response.json();
+                alert(result.msg)
+                console.log('Success:', result);
+            }catch(error){
+
+            }
+
+            
+            //REVISAR DESPUES
             numberEmploInput.value = "";
             nameEmploInput.value = "";
             emailEmploInput.value = "";
-            //companyEmploInput.value = "";
-            alert(result.msg)
 
-        } catch (error) {
-            console.error('Error:', error);
+            
+            submitButtonRegister.textContent = 'Registrar'
+            submitButtonRegister.classList.remove('btn-outline-dark'); // Elimina las clases actuales
+            submitButtonRegister.classList.add('btn-outline-primary'); // Añade la nueva clase
+            
+            btnClicked = false;
         }
 
     }
@@ -127,8 +170,12 @@ submitButtonRegister.addEventListener('click', async (event) => {
 })
 
 
+//Solicitar un usuario con su número del empleado
 submitButtonGet.addEventListener('click', async (event) => {
     event.preventDefault();
+    btnClicked = true;
+
+
     // Obtener el valor del input de número de empleado
     const number_emplo = document.getElementById('num_employee').value; // Necesitas el valor, no el elemento
     const company_emplo = document.getElementById('company').value;
@@ -151,7 +198,11 @@ submitButtonGet.addEventListener('click', async (event) => {
             numberEmploInput.value = num_employee;
             nameEmploInput.value = name;
             emailEmploInput.value = email;
-
+            if (btnClicked) {
+                submitButtonRegister.textContent = 'Actualizar'
+                submitButtonRegister.classList.remove('btn-outline-primary'); // Elimina las clases actuales
+                submitButtonRegister.classList.add('btn-outline-dark'); // Añade la nueva clase
+            }
         } else {
 
             alert('No se encontro el empleado')
@@ -162,14 +213,24 @@ submitButtonGet.addEventListener('click', async (event) => {
         console.error('Error:', error); // Manejo de errores
     }
 
-    console.log(number_emplo.value)
+    //console.log(number_emplo.value)
+
 })
+
+
+
 
 
 const clearInput = () => {
     inputsClear.forEach((element) => {
         element.value = "";
     })
+
+    submitButtonRegister.textContent = 'Registrar'
+    submitButtonRegister.classList.remove('btn-outline-dark'); // Elimina las clases actuales
+    submitButtonRegister.classList.add('btn-outline-primary'); // Añade la nueva clase
+    
+    btnClicked = false;
 }
 
 

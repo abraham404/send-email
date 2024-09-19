@@ -181,8 +181,9 @@ def add_employee():
     return jsonify(message)
     
 
-@app.route('/api/employee/<int:id>/<string:company>', methods=['GET'])
+@app.route('/api/employee/<string:id>/<string:company>', methods=['GET'])
 def get_employee(id,company):
+    
     
 
     try:
@@ -214,6 +215,48 @@ def get_employee(id,company):
 
     finally:
         db_conection.close()
+        
+
+@app.route('/api/employee/<string:id>/<string:company>', methods=['PUT'])
+def update_employee(id, company):
+    
+    update_employee_data = request.json  # Obtener datos JSON enviados desde el frontend
+    new_number_emplo = update_employee_data.get('number_emplo')
+    name_emplo = update_employee_data.get('name_emplo')
+    email_emplo = update_employee_data.get('email_emplo')
+    #company_emplo = update_employee_data.get('company_emplo')
+    
+    try:
+        db_conection = sqlite3.connect("C:/sqlite/database_rh.db")
+        cursor = db_conection.cursor()
+        
+        # Consulta SQL segura con el ID parametrizado
+        query = '''
+        UPDATE prueba 
+        SET num_empleado = ?, nombre = ?, email = ?, empresa = ? 
+        WHERE num_empleado = ?;
+        '''
+
+        cursor.execute(query, (new_number_emplo, name_emplo, email_emplo, company, id))
+
+
+        # Guardar los cambios en la base de datos
+        db_conection.commit()
+
+        # Cerrar la conexión
+        db_conection.close()
+        
+        message = {"msg": "Empleado actualizado con éxito"}
+        return jsonify(message)
+        
+
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+    finally:
+        db_conection.close()
+        
+        
 
 
 
