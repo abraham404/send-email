@@ -7,6 +7,7 @@ const combobox = document.getElementById('company');
 
 const numberEmploInput = document.getElementById('num_employee_to_register');
 const nameEmploInput = document.getElementById('name_employee');
+//nameEmploInput = this.nameEmploInput.toUpperCase();
 const emailEmploInput = document.getElementById('email_employee');
 let btnClicked = false;
 
@@ -128,13 +129,13 @@ submitButtonRegister.addEventListener('click', async (event) => {
             } catch (error) {
                 console.error('Error:', error);
             }
-        }else {
+        } else {
 
-            try{
+            try {
                 console.log("Hola soy Jorge");
 
-                 // Usamos fetch con async/await para enviar los datos al backend
-                 const response = await fetch(`/api/employee/${number_emplo}/${company_emplo}`, {
+                // Usamos fetch con async/await para enviar los datos al backend
+                const response = await fetch(`/api/employee/${number_emplo}/${company_emplo}`, {
                     method: 'PUT', // Usamos el método POST
                     headers: {
                         'Content-Type': 'application/json' // Indicamos que los datos son JSON
@@ -146,21 +147,21 @@ submitButtonRegister.addEventListener('click', async (event) => {
                 const result = await response.json();
                 alert(result.msg)
                 console.log('Success:', result);
-            }catch(error){
+            } catch (error) {
 
             }
 
-            
+
             //REVISAR DESPUES
             numberEmploInput.value = "";
             nameEmploInput.value = "";
             emailEmploInput.value = "";
 
-            
+
             submitButtonRegister.textContent = 'Registrar'
             submitButtonRegister.classList.remove('btn-outline-dark'); // Elimina las clases actuales
             submitButtonRegister.classList.add('btn-outline-primary'); // Añade la nueva clase
-            
+
             btnClicked = false;
         }
 
@@ -198,6 +199,7 @@ submitButtonGet.addEventListener('click', async (event) => {
             numberEmploInput.value = num_employee;
             nameEmploInput.value = name;
             emailEmploInput.value = email;
+            renderListEmployee(name, email, num_employee)
             if (btnClicked) {
                 submitButtonRegister.textContent = 'Actualizar'
                 submitButtonRegister.classList.remove('btn-outline-primary'); // Elimina las clases actuales
@@ -218,6 +220,47 @@ submitButtonGet.addEventListener('click', async (event) => {
 })
 
 
+const renderListEmployee = (nameEmployee, emailEmployee, numberEmployee) => {
+    const employeeList = document.getElementById('employeeList')
+    const employeeItem = document.createElement("li");
+    employeeItem.classList = 'list-group-item list-group-item-dark my-3  items-li'
+    // Agregar border-radius
+    employeeItem.style.borderRadius = "10px"; // Puedes ajustar el valor según tus necesidades    
+    employeeItem.style.width = "384px"
+    employeeItem.innerHTML = `
+            <header class="d-flex justify-content-between align-items-ceneter">
+            <h5 class="name-employee">${nameEmployee}</h5>
+            <div>
+            <button id="id-employee-${numberEmployee}" class="btn btn-danger btn-delete btn-sm btn-delete fa fa-trash"></button>
+            </div>
+            </header>
+            <p>${emailEmployee}</p>
+    `
+
+    employeeList.appendChild(employeeItem);
+
+    
+    //variable para manipular el boton de eliminar
+    const deleteButton = employeeItem.querySelector(`#id-employee-${numberEmployee}`);
+    
+
+    deleteButton.addEventListener('click', e => {
+        // Eliminar el elemento de la lista
+            employeeList.removeChild(employeeItem);
+        console.log(`Empleado eliminado: ${nameEmployee}`);
+    });
+
+    /*
+    employeeItem.addEventListener('click', e => {
+        console.log("Hola");
+    });
+    */
+
+    //console.log(nameEmployee, emailEmployee)
+    console.log(employeeList)
+
+}
+
 
 
 
@@ -229,7 +272,7 @@ const clearInput = () => {
     submitButtonRegister.textContent = 'Registrar'
     submitButtonRegister.classList.remove('btn-outline-dark'); // Elimina las clases actuales
     submitButtonRegister.classList.add('btn-outline-primary'); // Añade la nueva clase
-    
+
     btnClicked = false;
 }
 

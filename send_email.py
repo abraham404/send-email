@@ -3,7 +3,6 @@ from flask_cors import CORS
 import sqlite3
 import os
 from pathlib import Path
-
 import re
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -62,13 +61,23 @@ def sendData():
     #directorio = Path('C:/Users/Abraham-TI/Desktop/mail')
     #directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
     if company == 'ctECO_BAJA_TOURS_2020Q':
-        #directorio = Path('\\\\192.168.101.130\\CFDI de nominas')
+
         directorio = Path(r'\\192.168.101.130\CFDI de nominas')
+
     elif company == 'ctTRANSPORTE_ULPZS':
+
         directorio = Path(r'\\192.168.101.130\CFDI de nominas2')
     
-        #directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
+    elif company == 'ctBAJA_PACK_SA_CULQ':
+    
+        directorio = Path(r'\\192.168.101.220\CFDI de nominas')
+    
+    elif company == 'ctBAJA_PACK_SA_LAPQ':
+    
+        directorio = Path(r'\\192.168.101.220\CFDI de nominas2')
+        
     elif company == 'prueba':
+    
         directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
 
 
@@ -145,7 +154,6 @@ def sendData():
     return jsonify(message)
 
 
-
 @app.post('/api/employee')
 def add_employee():
     
@@ -179,7 +187,7 @@ def add_employee():
     
     message = {"msg": "Empleado guardado con éxito"}
     return jsonify(message)
-    
+        
 
 @app.route('/api/employee/<string:id>/<string:company>', methods=['GET'])
 def get_employee(id,company):
@@ -225,6 +233,8 @@ def update_employee(id, company):
     name_emplo = update_employee_data.get('name_emplo')
     email_emplo = update_employee_data.get('email_emplo')
     #company_emplo = update_employee_data.get('company_emplo')
+    
+
     
     try:
         db_conection = sqlite3.connect("C:/sqlite/database_rh.db")
