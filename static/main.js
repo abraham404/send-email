@@ -4,18 +4,21 @@ const submitButtonRegister = document.getElementById('submitButton_register');
 const submitButtonGet = document.getElementById('submitButtonSelect');
 const inputsClear = document.querySelectorAll('.clear-input');
 const combobox = document.getElementById('company');
-
+//vertor para guardar los números de empleado a
+//los que se le va a mandar los correos
+let sendEmailEmployee = [];
 const numberEmploInput = document.getElementById('num_employee_to_register');
 const nameEmploInput = document.getElementById('name_employee');
 //nameEmploInput = this.nameEmploInput.toUpperCase();
 const emailEmploInput = document.getElementById('email_employee');
 let btnClicked = false;
 
-// Añadimos un event listener al botón para capturar el evento de clic
+// enviar los correos electronicos
 submitButton.addEventListener('click', async (event) => {
     event.preventDefault(); // Prevenimos cualquier acción por defecto
     submitButton.disabled = true;
     // Obtenemos los valores de los inputs
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('pass').value;
     const company = document.getElementById('company').value;
@@ -39,7 +42,9 @@ submitButton.addEventListener('click', async (event) => {
             password,
             company,
             period,
-            year
+            year,
+            sendEmailEmployee
+
         };
 
 
@@ -55,13 +60,16 @@ submitButton.addEventListener('click', async (event) => {
 
             const result = await response.json();
             console.log('Success:', result);
+
             submitButton.disabled = false;
             alert(result.msg)
+            location.reload();
 
         } catch (error) {
             console.error('Error:', error);
         }
     }
+
 
 });
 
@@ -124,6 +132,7 @@ submitButtonRegister.addEventListener('click', async (event) => {
                 //companyEmploInput.value = "";
 
                 alert(result.msg)
+                //location.reload();
 
 
             } catch (error) {
@@ -132,7 +141,7 @@ submitButtonRegister.addEventListener('click', async (event) => {
         } else {
 
             try {
-                console.log("Hola soy Jorge");
+
 
                 // Usamos fetch con async/await para enviar los datos al backend
                 const response = await fetch(`/api/employee/${number_emplo}/${company_emplo}`, {
@@ -146,6 +155,7 @@ submitButtonRegister.addEventListener('click', async (event) => {
                 console.log(response);  //
                 const result = await response.json();
                 alert(result.msg)
+                location.reload();
                 console.log('Success:', result);
             } catch (error) {
 
@@ -174,6 +184,7 @@ submitButtonRegister.addEventListener('click', async (event) => {
 //Solicitar un usuario con su número del empleado
 submitButtonGet.addEventListener('click', async (event) => {
     event.preventDefault();
+    let uniqueEmployee = [];
     btnClicked = true;
 
 
@@ -205,6 +216,7 @@ submitButtonGet.addEventListener('click', async (event) => {
                 submitButtonRegister.classList.remove('btn-outline-primary'); // Elimina las clases actuales
                 submitButtonRegister.classList.add('btn-outline-dark'); // Añade la nueva clase
             }
+
         } else {
 
             alert('No se encontro el empleado')
@@ -221,46 +233,73 @@ submitButtonGet.addEventListener('click', async (event) => {
 
 
 const renderListEmployee = (nameEmployee, emailEmployee, numberEmployee) => {
-    const employeeList = document.getElementById('employeeList')
+
+    //vetor para guardar los números de los empleados
+
+
+    const employeeList = document.getElementById('employeeList');
     const employeeItem = document.createElement("li");
-    employeeItem.classList = 'list-group-item list-group-item-dark my-3  items-li'
-    // Agregar border-radius
-    employeeItem.style.borderRadius = "10px"; // Puedes ajustar el valor según tus necesidades    
-    employeeItem.style.width = "384px"
-    employeeItem.innerHTML = `
-            <header class="d-flex justify-content-between align-items-ceneter">
-            <h5 class="name-employee">${nameEmployee}</h5>
-            <div>
-            <button id="id-employee-${numberEmployee}" class="btn btn-danger btn-delete btn-sm btn-delete fa fa-trash"></button>
-            </div>
-            </header>
-            <p>${emailEmployee}</p>
-    `
+    employeeItem.classList = 'list-group-item list-group-item-dark my-3 items-li fade-out';
+    employeeItem.style.borderRadius = "10px";
+    employeeItem.style.width = "384px";
 
-    employeeList.appendChild(employeeItem);
 
-    
-    //variable para manipular el boton de eliminar
-    const deleteButton = employeeItem.querySelector(`#id-employee-${numberEmployee}`);
-    
+    if (!sendEmailEmployee.includes(numberEmployee)) { // Verifica si el número no está en el arreglo
+        sendEmailEmployee.push(numberEmployee);
+        employeeItem.innerHTML = `
+                <header class="d-flex justify-content-between align-items-ceneter">
+                <h5 class="name-employee">${nameEmployee}</h5>
+                <div>
+                <button id="employee-${numberEmployee}" class="btn btn-danger btn-delete btn-sm btn-delete fa fa-trash"></button>
+                </div>
+                </header>
+                <p>${emailEmployee}</p>
+        `;
+        employeeList.appendChild(employeeItem);
+        console.log(sendEmailEmployee)
+        
+    const deleteButton = employeeItem.querySelector(`#employee-${numberEmployee}`);
+    // Seleccionar el botón que se ha agregado
 
     deleteButton.addEventListener('click', e => {
-        // Eliminar el elemento de la lista
+        // Agregar la clase para iniciar la animación
+        employeeItem.classList.add('hide');
+
+
+        // Esperar a que termine la animación antes de eliminar el elemento
+        setTimeout(() => {
             employeeList.removeChild(employeeItem);
-        console.log(`Empleado eliminado: ${nameEmployee}`);
+            console.log(`Empleado eliminado: ${nameEmployee}`);
+        }, 500); // La animación dura 0.5 segundos
+
+
+        // Encontrar el índice del valor a eliminar
+        const indexToRemove = sendEmailEmployee.indexOf(numberEmployee);
+
+        // Si el valor existe en el array
+        if (indexToRemove !== -1) {
+            sendEmailEmployee.splice(indexToRemove, 1); // Elimina el elemento en esa posición
+            console.log(sendEmailEmployee);
+        }
+
     });
 
-    /*
-    employeeItem.addEventListener('click', e => {
-        console.log("Hola");
-    });
-    */
+    console.log(sendEmailEmployee);
+    //console.log(employeeList);
+    } else {
+        alert("El empleado ya está en la lista")
+    }
 
-    //console.log(nameEmployee, emailEmployee)
-    console.log(employeeList)
 
-}
 
+   
+
+    // sendEmailEmployee.push(numberEmployee);
+    // sendEmailEmployee = Array.from(new Set(sendEmailEmployee));
+    // console.log("arregle" + sendEmailEmployee);
+
+
+};
 
 
 
@@ -307,4 +346,5 @@ combobox.addEventListener('change', function () {
 
 
 })
+
 
