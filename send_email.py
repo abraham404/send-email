@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, send_file
-from flask_cors import CORS
+
 import sqlite3
 import os
 from pathlib import Path
@@ -12,7 +12,7 @@ from email import encoders
 
 
 app = Flask(__name__)
-CORS(app)
+
 
 
 def send_email(subject, body, to_emails, from_email, from_password, files=[]):
@@ -59,7 +59,7 @@ def sendData():
     period = data.get("period")
     year = data.get("year")
     send_email_employee_num = data.get("sendEmailEmployee")
-
+    print(send_email_employee_num)
     if not send_email_employee_num:
         # Especificar el directorio
         # directorio = Path('C:/Users/Abraham-TI/Desktop/mail')
@@ -85,13 +85,14 @@ def sendData():
             # directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
             directorio = Path("C:/Users/Abraham-TI/Desktop/mail")
 
+      
         i = 1
         regex = r"(?:[^_]*_){5}([^_]+)"
         regex2 = r"(\d{4})_(\d{1,2})"
         print(
-            f"Email: {email}, Password: {password}, Company: { type(company)}, Period: {period}, Year: {year}"
+            f"Email: {email}, Password: {password}, Company: {company}, Period: {period}, Year: {year}"
         )
-        print(type("hola"))
+        
 
         try:
             # Conexión a la base de datos
@@ -198,14 +199,17 @@ def sendData():
 
             # directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
             directorio = Path("C:/Users/Abraham-TI/Desktop/mail")
+        
+        elif company == "ctECO_BAJA_TOURS_NM":
+            directorio = Path(r"\\192.168.101.220\CFDI de nominas3")
 
         i = 1
         regex = r"(?:[^_]*_){5}([^_]+)"
         regex2 = r"(\d{4})_(\d{1,2})"
         print(
-            f"Email: {email}, Password: {password}, Company: { type(company)}, Period: {period}, Year: {year}"
+            f"Email: {email}, Password: {password}, Company: {company}, Period: {period}, Year: {year}"
         )
-        
+        print("YA VALISTE :)")
         try:
             # Conexión a la base de datos
             db_conection = sqlite3.connect("C:/sqlite/database_rh.db")
