@@ -41,8 +41,10 @@
                 </select>
             </div>
             <div>
-                <label for="">Periodo: </label>
+                <label for="">Período Inicial: </label>
                 <input type="number" id="period" name="period" min="1" max="53" value="0" />
+                <label for="">Período Final: </label>
+                <input type="number" id="period-end" name="period-end" min="1" max="53" value="0" />
             </div>
             <div>
                 <label for="">Año: </label>
@@ -88,9 +90,18 @@
     <script src="/static/main.js"></script>
 
     <script>
+        // Script para poner el año actual por defecto
         // Obtener el año actual
         const currentYear = new Date().getFullYear();
         const inputName = document.getElementById('name_employee');
+
+        //Declarando una constante para obtener el valor del periodo inicial
+        const inputPeriodInitial = document.getElementById("period");
+        //Declarando una constante para inicializar el input final
+        const inputPeriodEnd = document.getElementById("period-end");
+        //Constante para obtener el email del empleado
+        const inputEmailEmployee = document.getElementById("email_employee");
+
 
         // Establecer el límite superior en el campo de entrada
         document.getElementById('year').max = currentYear;
@@ -98,7 +109,7 @@
         const checkbox = document.getElementById('showPass');
         const passwordInput = document.getElementById('pass');
 
-
+        //función para ocultar la contranseña
         checkbox.addEventListener('change', function () {
             if (checkbox.checked) {
                 passwordInput.type = 'text'; // Muestra la contraseña
@@ -107,11 +118,42 @@
             }
         });
 
-        inputName.addEventListener('input', function() {
+        //Hacer el texto en mayusculas es el nombre
+        inputName.addEventListener('input', function () {
             this.value = this.value.toUpperCase()
-            console.log("Hola como")
         })
 
+        // Función para tener el mismo periodo en los dos campos
+        inputPeriodInitial.addEventListener("input", (event) => {
+            // El valor actual del input
+            const valuePeriod = event.target.value;
+            inputPeriodEnd.value = valuePeriod;
+        });
+
+
+        //Función para comparar el periodo inicial y final
+        inputPeriodEnd.addEventListener("input", (event) => {
+
+            //si el periodo final es mayor que el periodo inicial
+            //lanzar una alerta
+            let periodOne = parseInt(inputPeriodInitial.value, 10);
+            let periodTwo = parseInt(inputPeriodEnd.value, 10);
+
+            //Condición para comparar los dos periodos
+            if (periodOne > periodTwo) {
+                alert("El periodo final no puede ser menor al periodo inicial")
+                inputPeriodEnd.value = inputPeriodInitial.value;
+            }
+
+        });
+
+        // Función para eliminar los espacios en blanco
+        inputEmailEmployee.addEventListener("input", (event) => {
+            const { value } = event.target;
+            if (value && typeof value === 'string') {
+                event.target.value = value.replace(/\s+/g, ''); // Esto elimina todos los espacios
+            }
+        });
 
     </script>
 </body>

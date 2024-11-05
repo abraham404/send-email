@@ -57,9 +57,14 @@ def sendData():
     password = data.get("password")
     company = data.get("company")
     period = data.get("period")
+    periodEnd = data.get("periodEnd")
     year = data.get("year")
     send_email_employee_num = data.get("sendEmailEmployee")
     print(send_email_employee_num)
+    
+    print(f"ESTE ES EL PERIODO FINAL JORGE {periodEnd}")
+
+
     if not send_email_employee_num:
         # Especificar el directorio
         # directorio = Path('C:/Users/Abraham-TI/Desktop/mail')
@@ -83,9 +88,13 @@ def sendData():
         elif company == "prueba":
 
             # directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
-            directorio = Path("C:/Users/Abraham-TI/Desktop/mail")
+            directorio = Path("C:/Users/Abraham-TI/Desktop/mail") 
+        
+        elif company == "ctECO_BAJA_TOURS_NM":
+            
+            directorio = Path(r"\\192.168.101.220\CFDI de nominas3")
 
-      
+
         i = 1
         regex = r"(?:[^_]*_){5}([^_]+)"
         regex2 = r"(\d{4})_(\d{1,2})"
@@ -112,8 +121,8 @@ def sendData():
 
                             year_link = period_year.group(1)
                             period_link = period_year.group(2)
-
-                            if year_link == year and period_link == period:
+                            print("ESTO ES UNA PUTA PRUEBA")
+                            if year_link == year and (period_link >= period and period_link <= periodEnd):
                                 num_employee = re.search(regex, name_ruta)
                                 code_employee = num_employee.group(1)
 
@@ -178,7 +187,6 @@ def sendData():
         print(len(send_email_employee_num))
         # print(*send_email_employee)
 
-
         if company == "ctECO_BAJA_TOURS_2020Q":
 
             directorio = Path(r"\\192.168.101.130\CFDI de nominas")
@@ -201,6 +209,7 @@ def sendData():
             directorio = Path("C:/Users/Abraham-TI/Desktop/mail")
         
         elif company == "ctECO_BAJA_TOURS_NM":
+            
             directorio = Path(r"\\192.168.101.220\CFDI de nominas3")
 
         i = 1
@@ -238,8 +247,9 @@ def sendData():
                                     year_link = period_year.group(1)
                                     period_link = period_year.group(2)
 
-                                    if year_link == year and period_link == period:
-                                
+                                    #if year_link == year and period_link == period:
+                                    #print("FALLASTE CORAZON")
+                                    if year_link == year and (period_link >= period and period_link <= periodEnd):
 
                                         cursor.execute(
                                             f"SELECT email, nombre FROM {company} WHERE num_empleado = ?",
@@ -396,11 +406,13 @@ def update_employee(id, company):
         # Consulta SQL segura con el ID parametrizado
         query = f"""
         UPDATE {company_emplo} 
-        SET num_empleado = ?, nombre = ?, email = ?, empresa = ? 
+        SET num_empleado = ?,  nombre = ?, email = ?, empresa = ? 
         WHERE num_empleado = ?;
         """
 
         cursor.execute(query, (new_number_emplo, name_emplo, email_emplo, company, id))
+
+
 
         # Guardar los cambios en la base de datos
         db_conection.commit()

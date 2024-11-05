@@ -13,7 +13,7 @@ const nameEmploInput = document.getElementById('name_employee');
 const emailEmploInput = document.getElementById('email_employee');
 let btnClicked = false;
 
-// enviar los correos electronicos
+// Función para enviar los correos
 submitButton.addEventListener('click', async (event) => {
     event.preventDefault(); // Prevenimos cualquier acción por defecto
     submitButton.disabled = true;
@@ -23,6 +23,7 @@ submitButton.addEventListener('click', async (event) => {
     const password = document.getElementById('pass').value;
     const company = document.getElementById('company').value;
     const period = document.getElementById('period').value;
+    const periodEnd = document.getElementById('period-end').value;
     const year = document.getElementById('year').value;
 
 
@@ -42,6 +43,7 @@ submitButton.addEventListener('click', async (event) => {
             password,
             company,
             period,
+            periodEnd, //ESTA FUE LA ÚLTIMA LINEA QUE PUSE
             year,
             sendEmailEmployee
 
