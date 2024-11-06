@@ -62,7 +62,7 @@ def sendData():
     send_email_employee_num = data.get("sendEmailEmployee")
     print(send_email_employee_num)
     
-    print(f"ESTE ES EL PERIODO FINAL JORGE {periodEnd}")
+    #print(f"ESTE ES EL PERIODO FINAL JORGE {periodEnd}")
 
 
     if not send_email_employee_num:
@@ -99,7 +99,7 @@ def sendData():
         regex = r"(?:[^_]*_){5}([^_]+)"
         regex2 = r"(\d{4})_(\d{1,2})"
         print(
-            f"Email: {email}, Password: {password}, Company: {company}, Period: {period}, Year: {year}"
+            f"Email: {email}, Password: {password}, Company: {company}, Period Inicial: {period}, Perido: Final {periodEnd}, Year: {year}"
         )
         
 
@@ -121,11 +121,11 @@ def sendData():
 
                             year_link = period_year.group(1)
                             period_link = period_year.group(2)
-                            print("ESTO ES UNA PUTA PRUEBA")
+                            
                             if year_link == year and (period_link >= period and period_link <= periodEnd):
                                 num_employee = re.search(regex, name_ruta)
                                 code_employee = num_employee.group(1)
-
+                                print(f"Period {period_link}")                
                                 cursor.execute(
                                     f"SELECT email, nombre FROM {company} WHERE num_empleado = ?",
                                     (code_employee,),
@@ -139,7 +139,7 @@ def sendData():
                                         )
                                         if __name__ == "__main__":
                                             subject = (
-                                                "Recibo de nomina de: "
+                                                f"Recibo de nomina periodo: {period_link} de: "
                                                 + email_destina[1]
                                             )
                                             body = "Recibo de nomina"
@@ -216,9 +216,9 @@ def sendData():
         regex = r"(?:[^_]*_){5}([^_]+)"
         regex2 = r"(\d{4})_(\d{1,2})"
         print(
-            f"Email: {email}, Password: {password}, Company: {company}, Period: {period}, Year: {year}"
+            f"Email: {email}, Password: {password}, Company: {company}, Period Inicial: {period}, Perido: Final {periodEnd}, Year: {year}"
         )
-        print("YA VALISTE :)")
+        
         try:
             # Conexión a la base de datos
             db_conection = sqlite3.connect("C:/sqlite/database_rh.db")
@@ -247,10 +247,8 @@ def sendData():
                                     year_link = period_year.group(1)
                                     period_link = period_year.group(2)
 
-                                    #if year_link == year and period_link == period:
-                                    #print("FALLASTE CORAZON")
                                     if year_link == year and (period_link >= period and period_link <= periodEnd):
-
+                                        print(f"Periodo: {period_link}")
                                         cursor.execute(
                                             f"SELECT email, nombre FROM {company} WHERE num_empleado = ?",
                                             (code_employee,),
@@ -264,7 +262,7 @@ def sendData():
                                                 )
                                                 if __name__ == "__main__":
                                                     subject = (
-                                                        "Recibo de nomina de: "
+                                                      f"Recibo de nomina periodo: {period_link} de: "
                                                         + email_destina[1]
                                                     )
                                                     body = "Recibo de nomina"
