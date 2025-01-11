@@ -71,11 +71,11 @@ def sendData():
         # directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
         if company == "ctECO_BAJA_TOURS_2020Q":
 
-            directorio = Path(r"\\192.168.101.130\CFDI de nominas")
+            directorio = Path(r"\\192.168.101.136\CFDI de nominas")
 
         elif company == "ctTRANSPORTE_ULPZS":
 
-            directorio = Path(r"\\192.168.101.130\CFDI de nominas2")
+            directorio = Path(r"\\192.168.101.148\CFDI de nominas3")
 
         elif company == "ctBAJA_PACK_SA_CULQ":
 
@@ -189,11 +189,11 @@ def sendData():
 
         if company == "ctECO_BAJA_TOURS_2020Q":
 
-            directorio = Path(r"\\192.168.101.130\CFDI de nominas")
+            directorio = Path(r"\\192.168.101.136\CFDI de nominas")
 
         elif company == "ctTRANSPORTE_ULPZS":
 
-            directorio = Path(r"\\192.168.101.130\CFDI de nominas2")
+            directorio = Path(r"\\192.168.101.148\CFDI de nominas3")
 
         elif company == "ctBAJA_PACK_SA_CULQ":
 
@@ -204,6 +204,7 @@ def sendData():
             directorio = Path(r"\\192.168.101.220\CFDI de nominas2")
 
         elif company == "prueba":
+
 
             # directorio = Path('\\\\192.168.101.108\\Users\\Abraham\\Desktop\\emailAbraham')
             directorio = Path("C:/Users/Abraham-TI/Desktop/mail")

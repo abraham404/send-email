@@ -34,7 +34,7 @@
                     <option class="juanita">ctBAJA_PACK_SA_LAPQ</option>
                     <option class="juanita">ctBAJA_PACK_SA_CULQ</option>
                     <option class="juanita">ctECO_BAJA_TOURS_NM</option>
-                    <option class="iliana">ctECO_BAJA_TOURS_2020Q</option>
+                    <option class="claudia">ctECO_BAJA_TOURS_2020Q</option>
                     <option class="iliana">ctTRANSPORTE_ULPZS</option>
                     <option class="claudia emty">ctTRANPORTE_URBA_2022</option>
                     <option class="emty">prueba</option>
@@ -48,7 +48,7 @@
             </div>
             <div>
                 <label for="">Año: </label>
-                <input type="number" id="year" name="year" min="1900" max="2100" value="2024" />
+                <input type="number" id="year" name="year" min="1900" max="2100" />
             </div>
         </div>
 
@@ -94,6 +94,7 @@
         // Obtener el año actual
         const currentYear = new Date().getFullYear();
         const inputName = document.getElementById('name_employee');
+        console.log(currentYear)
 
         //Declarando una constante para obtener el valor del periodo inicial
         const inputPeriodInitial = document.getElementById("period");
@@ -105,7 +106,9 @@
 
         // Establecer el límite superior en el campo de entrada
         document.getElementById('year').max = currentYear;
-
+        // Enviar el año actual al input
+        document.getElementById('year').value = currentYear;
+        
         const checkbox = document.getElementById('showPass');
         const passwordInput = document.getElementById('pass');
 

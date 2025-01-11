@@ -259,42 +259,42 @@ const renderListEmployee = (nameEmployee, emailEmployee, numberEmployee) => {
         `;
         employeeList.appendChild(employeeItem);
         console.log(sendEmailEmployee)
-        
-    const deleteButton = employeeItem.querySelector(`#employee-${numberEmployee}`);
-    // Seleccionar el botón que se ha agregado
 
-    deleteButton.addEventListener('click', e => {
-        // Agregar la clase para iniciar la animación
-        employeeItem.classList.add('hide');
+        const deleteButton = employeeItem.querySelector(`#employee-${numberEmployee}`);
+        // Seleccionar el botón que se ha agregado
 
-
-        // Esperar a que termine la animación antes de eliminar el elemento
-        setTimeout(() => {
-            employeeList.removeChild(employeeItem);
-            console.log(`Empleado eliminado: ${nameEmployee}`);
-        }, 500); // La animación dura 0.5 segundos
+        deleteButton.addEventListener('click', e => {
+            // Agregar la clase para iniciar la animación
+            employeeItem.classList.add('hide');
 
 
-        // Encontrar el índice del valor a eliminar
-        const indexToRemove = sendEmailEmployee.indexOf(numberEmployee);
+            // Esperar a que termine la animación antes de eliminar el elemento
+            setTimeout(() => {
+                employeeList.removeChild(employeeItem);
+                console.log(`Empleado eliminado: ${nameEmployee}`);
+            }, 500); // La animación dura 0.5 segundos
 
-        // Si el valor existe en el array
-        if (indexToRemove !== -1) {
-            sendEmailEmployee.splice(indexToRemove, 1); // Elimina el elemento en esa posición
-            console.log(sendEmailEmployee);
-        }
 
-    });
+            // Encontrar el índice del valor a eliminar
+            const indexToRemove = sendEmailEmployee.indexOf(numberEmployee);
 
-    console.log(sendEmailEmployee);
-    //console.log(employeeList);
+            // Si el valor existe en el array
+            if (indexToRemove !== -1) {
+                sendEmailEmployee.splice(indexToRemove, 1); // Elimina el elemento en esa posición
+                console.log(sendEmailEmployee);
+            }
+
+        });
+
+        console.log(sendEmailEmployee);
+        //console.log(employeeList);
     } else {
         alert("El empleado ya está en la lista")
     }
 
 
 
-   
+
 
     // sendEmailEmployee.push(numberEmployee);
     // sendEmailEmployee = Array.from(new Set(sendEmailEmployee));
@@ -337,7 +337,13 @@ combobox.addEventListener('change', function () {
 
         combobox.style.backgroundColor = "#c9f6d6";
 
-    } else if ((combobox.value == 'ctECO_BAJA_TOURS_2020Q' || combobox.value == 'ctTRANSPORTE_ULPZS')) {
+    } else if (combobox.value == 'ctECO_BAJA_TOURS_2020Q') {
+        
+        combobox.style.backgroundColor = "#FFDAB9";
+    
+    }
+
+    else if ((combobox.value == 'ctTRANSPORTE_ULPZS')) {
 
         combobox.style.backgroundColor = "#f6c9e9";
 
